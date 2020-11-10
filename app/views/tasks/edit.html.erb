@@ -1,2 +1,20 @@
-<h1>Tasks#edit</h1>
-<p>Find me in app/views/tasks/edit.html.erb</p>
+<h1>タスク編集</h1>
+<%= form_with(model: @task, local: true, url: task_path ) do |f| %>
+  <% if @task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @task.errors.count %>件のエラーがあります。</h2>
+      <ul>
+      <% @task.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.label :name, "タスク名" %><br>
+  <%= f.text_field :name %><br>
+  <%= f.label :price, "タスク詳細" %>
+  <%= f.text_field :detail %>
+  <%= f.submit "更新する", name: "commit", data: {disable_with:"editting･･･"} %><br>
+  <%= link_to '詳細', task_path(@task.id) %>
+  <%= link_to '戻る', :back %>
+<% end %>
