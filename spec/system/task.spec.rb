@@ -23,6 +23,15 @@ RSpec.describe 'タスク管理機能', type: :system do
         # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
       end
     end
+    context 'タスクが作成日時の降順に並んでいる場合' do
+      it '追加したタスクが最初の行に表示される' do
+        visit tasks_path
+        task = all('tbody tr')
+        expect(task[0]).to have_content 'デフォルトタスク詳細3'
+        expect(task[1]).to have_content 'デフォルトタスク詳細2'
+        expect(task[2]).to have_content 'デフォルトタスク詳細1'
+      end
+    end
   end
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
