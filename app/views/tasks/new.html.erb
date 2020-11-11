@@ -1,0 +1,21 @@
+<h1>タスク登録</h1>
+<%= form_with(model: @task, local: true) do |f| %>
+  <% if @task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @task.errors.count %>件のエラーがあります。</h2>
+      <ul>
+        <%= @task.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="task_wrapper">
+    <%= f.label :name, "タスク名" %><br>
+    <%= f.text_field :name , id:"task_name" %><br>
+    <%= f.label :price, "タスク詳細" %><br>
+    <%= f.text_area :detail, id:"task_detail" %>
+  </div>
+  <%= f.submit "登録する", name: "commit", data: {disable_with:"postting･･･"} %><br>
+  <%= link_to '戻る', tasks_path %>
+<% end %>

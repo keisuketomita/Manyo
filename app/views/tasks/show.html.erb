@@ -1,0 +1,5 @@
+<h1>タスク詳細</h1>
+<p>タスク名 : <%= @task.name %></p>
+<p>タスク詳細 : <%= @task.detail %></p>
+<%= link_to '編集', edit_task_path(@task.id) %>
+<%= link_to '戻る', :back %>
