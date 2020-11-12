@@ -17,6 +17,10 @@
     <%= f.text_area :detail, id:"task_detail" %>
     <%= f.label :dead_line, "終了期限" %><br>
     <%= f.date_field :dead_line, id:"task_dead_line" %>
+    <%= f.label :status, "ステータス" %><br>
+    <%= f.select :status, [['未着手', '未着手'], ['着手中', '着手中'], ['完了', '完了']],
+                           { include_blank: false, selected: 1 },
+                           { id: "task_status" } %>
   </div>
   <%= f.submit "登録する", name: "commit", data: {disable_with:"postting･･･"} %><br>
   <%= link_to '戻る', tasks_path %>

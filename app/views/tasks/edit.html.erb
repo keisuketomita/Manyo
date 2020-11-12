@@ -12,10 +12,14 @@
   <% end %>
   <%= f.label :name, "タスク名" %><br>
   <%= f.text_field :name %><br>
-  <%= f.label :price, "タスク詳細" %>
-  <%= f.text_field :detail %>
+  <%= f.label :price, "タスク詳細" %><br>
+  <%= f.text_field :detail %><br>
   <%= f.label :dead_line, "終了期限" %><br>
-  <%= f.date_field :dead_line, id:"task_dead_line" %>
+  <%= f.date_field :dead_line, id:"task_dead_line" %><br>
+  <%= f.label :status, "ステータス" %><br>
+  <%= f.select :status, [['未着手', '未着手'], ['着手中', '着手中'], ['完了', '完了']],
+                         { include_blank: false, selected: 1 },
+                         { id: "task_status" } %><br>
   <%= f.submit "更新する", name: "commit", data: {disable_with:"editting･･･"} %><br>
   <%= link_to '詳細', task_path(@task.id) %>
   <%= link_to '戻る', :back %>

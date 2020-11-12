@@ -2,5 +2,6 @@
 <p>タスク名 : <%= @task.name %></p>
 <p>タスク詳細 : <%= @task.detail %></p>
 <p>終了期限 : <%= @task.dead_line %></p>
+<p>ステータス : <%= @task.status %></p>
 <%= link_to '編集', edit_task_path(@task.id) %>
 <%= link_to '戻る', :back %>
