@@ -9,12 +9,13 @@ class TasksController < ApplicationController
     elsif params[:status]
       @tasks = Task.all.status_is(params[:status])
     else
-      if params[:sort_expired]
+      if params[:sort_expired_dead_line]
         @tasks = Task.all.dead_line_desc
+      elsif params[:sort_expired_priority]
+        @tasks = Task.all.priority_desc
       else
         @tasks = Task.all.created_at_desc
       end
-      # @tasks = Task.all.name_like(params[:name]) if params[:name].present?
     end
   end
 
@@ -52,7 +53,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:name, :detail, :dead_line, :status)
+    params.require(:task).permit(:name, :detail, :dead_line, :status, :priority)
   end
   def set_task
      @task = Task.find(params[:id])

@@ -6,6 +6,18 @@ RSpec.describe 'タスク管理機能', type: :system do
     FactoryBot.create(:task_case3)
   end
   describe '一覧表示機能' do
+    context '優先順位をクリックした場合' do
+      it '優先順位の高い順で表示される' do
+        visit tasks_path
+        within first('thead tr') do
+          click_link '優先順位'
+        end
+        task = all('tbody tr')
+        expect(task[0]).to have_content 'デフォルトタスク3'
+        expect(task[1]).to have_content 'デフォルト2'
+        expect(task[2]).to have_content 'デフォルトタスク1'
+      end
+    end
     context '終了期限をクリックした場合' do
       it '終了期限の降順で表示される' do
         visit tasks_path

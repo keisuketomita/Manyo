@@ -21,6 +21,10 @@
     <%= f.select :status, [['未着手', '未着手'], ['着手中', '着手中'], ['完了', '完了']],
                            { include_blank: false, selected: 1 },
                            { id: "task_status" } %>
+    <%= f.label :priority, "優先順位" %><br>
+    <%= f.select :priority, Task.priorities.keys,
+                          { include_blank: false, selected: 0 },
+                          { id: "task_priority" } %>
   </div>
   <%= f.submit "登録する", name: "commit", data: {disable_with:"postting･･･"} %><br>
   <%= link_to '戻る', tasks_path %>

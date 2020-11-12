@@ -4,31 +4,37 @@ describe 'タスクモデルバリデーション機能', type: :model do
   describe 'バリデーションのテスト' do
     context 'タスクのタイトルが空の場合' do
       it 'バリデーションに抵触' do
-        task = Task.new(name: '', detail: '失敗テスト', dead_line: '2020/11/1', status: '未着手')
+        task = Task.new(name: '', detail: '失敗テスト', dead_line: '2020/11/1', status: '未着手', priority: 1)
         expect(task).not_to be_valid
       end
     end
     context 'タスクの詳細が空の場合' do
       it 'バリデーションに抵触' do
-        task = Task.new(name: '失敗テスト', detail: '', dead_line: '2020/11/1', status: '着手中')
+        task = Task.new(name: '失敗テスト', detail: '', dead_line: '2020/11/1', status: '着手中', priority: 1)
         expect(task).not_to be_valid
       end
     end
     context '終了期限が空の場合' do
       it 'バリデーションに抵触' do
-        task = Task.new(name: '失敗テスト', detail: 'テスト成功', dead_line: '', status: '未着手')
+        task = Task.new(name: '失敗テスト', detail: 'テスト成功', dead_line: '', status: '未着手', priority: 1)
         expect(task).not_to be_valid
       end
     end
     context 'ステータスが空の場合' do
       it 'バリデーションに抵触' do
-        task = Task.new(name: 'テスト成功', detail: 'テスト成功', dead_line: '2020/11/1', status: '')
+        task = Task.new(name: 'テスト成功', detail: 'テスト成功', dead_line: '2020/11/1', status: '', priority: 1)
         expect(task).not_to be_valid
       end
     end
-    context 'タスクのタイトルと詳細、終了期限に内容が記載されている場合' do
+    context '優先順位が空の場合' do
+      it 'バリデーションに抵触' do
+        task = Task.new(name: 'テスト成功', detail: 'テスト成功', dead_line: '2020/11/1', status: '着手中', priority: '')
+        expect(task).not_to be_valid
+      end
+    end
+    context '全ての項目が入力されている場合' do
       it 'バリデーションが通る' do
-        task = Task.new(name: 'テスト成功', detail: 'テスト成功', dead_line: '2020/11/1', status: '着手中')
+        task = Task.new(name: 'テスト成功', detail: 'テスト成功', dead_line: '2020/11/1', status: '着手中', priority: 1)
         expect(task).to be_valid
       end
     end
@@ -41,8 +47,6 @@ describe 'タスクモデルスコープ機能', type: :model do
     @case3 = FactoryBot.create(:task_case3)
   end
   describe '検索機能' do
-    # let!(:first_task) = FactoryBot.create(:first_task, name: "task1", status: "未着手") }
-    # let!(:second_task) = FactoryBot.create(:first_task,name: "taks2", status: "着手中") }
     context 'scopeメソッドでタイトルのあいまい検索をした場合' do
       it "検索キーワードを含むタスクが絞り込まれる" do
         expect(Task.name_like('タスク')).to include(@case1)
@@ -64,6 +68,7 @@ describe 'タスクモデルスコープ機能', type: :model do
         expect(Task.name_like('タスク').status_is('完了')).to include(@case3)
         expect(Task.name_like('タスク').status_is('完了')).not_to include(@case1)
         expect(Task.name_like('タスク').status_is('完了')).not_to include(@case2)
+        expect(Task.name_like('タスク').status_is('完了').count).to eq 1
       end
     end
   end
