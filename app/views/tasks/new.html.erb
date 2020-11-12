@@ -13,8 +13,10 @@
   <div class="task_wrapper">
     <%= f.label :name, "タスク名" %><br>
     <%= f.text_field :name , id:"task_name" %><br>
-    <%= f.label :price, "タスク詳細" %><br>
+    <%= f.label :detail, "タスク詳細" %><br>
     <%= f.text_area :detail, id:"task_detail" %>
+    <%= f.label :dead_line, "終了期限" %><br>
+    <%= f.date_field :dead_line, id:"task_dead_line" %>
   </div>
   <%= f.submit "登録する", name: "commit", data: {disable_with:"postting･･･"} %><br>
   <%= link_to '戻る', tasks_path %>

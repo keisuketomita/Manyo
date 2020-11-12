@@ -14,6 +14,8 @@
   <%= f.text_field :name %><br>
   <%= f.label :price, "タスク詳細" %>
   <%= f.text_field :detail %>
+  <%= f.label :dead_line, "終了期限" %><br>
+  <%= f.date_field :dead_line, id:"task_dead_line" %>
   <%= f.submit "更新する", name: "commit", data: {disable_with:"editting･･･"} %><br>
   <%= link_to '詳細', task_path(@task.id) %>
   <%= link_to '戻る', :back %>

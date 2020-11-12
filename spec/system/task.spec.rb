@@ -32,6 +32,18 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(task[2]).to have_content 'デフォルトタスク詳細1'
       end
     end
+    context '終了期限をクリックした場合' do
+      it '終了期限の降順で表示される' do
+        visit tasks_path
+        within first('thead tr') do
+          click_link '終了期限'
+        end
+        task = all('tbody tr')
+        expect(task[0]).to have_content 'デフォルトタスク詳細1'
+        expect(task[1]).to have_content 'デフォルトタスク詳細2'
+        expect(task[2]).to have_content 'デフォルトタスク詳細3'
+      end
+    end
   end
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
