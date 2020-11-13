@@ -17,6 +17,7 @@ class TasksController < ApplicationController
         @tasks = Task.all.created_at_desc.page(params[:page])
       end
     end
+    @row_count = 1
   end
 
   def new
