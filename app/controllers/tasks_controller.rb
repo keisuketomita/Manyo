@@ -1,7 +1,23 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:edit, :update, :destroy, :show]
+
   def index
-    @tasks = Task.all.order(created_at: "DESC")
+    if params[:name] && params[:status]
+      @tasks = Task.all.name_like(params[:name]).status_is(params[:status]).page(params[:page])
+    elsif params[:name]
+      @tasks = Task.all.name_like(params[:name]).page(params[:page])
+    elsif params[:status]
+      @tasks = Task.all.status_is(params[:status]).page(params[:page])
+    else
+      if params[:sort_expired_dead_line]
+        @tasks = Task.all.dead_line_desc.page(params[:page])
+      elsif params[:sort_expired_priority]
+        @tasks = Task.all.priority_desc.page(params[:page])
+      else
+        @tasks = Task.all.created_at_desc.page(params[:page])
+      end
+    end
+    @row_count = 1
   end
 
   def new
@@ -38,7 +54,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:name, :detail)
+    params.require(:task).permit(:name, :detail, :dead_line, :status, :priority)
   end
   def set_task
      @task = Task.find(params[:id])
