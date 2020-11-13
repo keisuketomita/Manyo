@@ -5,3 +5,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+51.times do |n|
+  name = Faker::Games::Pokemon.name
+  detail = Faker::Games::Pokemon.name
+  dead_line = "002020-11-30"
+  status = "未着手"
+  priority = 0
+  Task.create!(name: name,
+               detail: detail,
+               dead_line: dead_line,
+               status: status,
+               priority: priority
+               )
+end

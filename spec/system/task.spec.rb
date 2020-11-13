@@ -81,15 +81,14 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
-      # new_task_pathに遷移する（新規作成ページに遷移する）
       visit new_task_path
-      # 新規登録内容を入力する
       fill_in 'task_name', with: 'タスク1'
       fill_in 'task_detail', with: 'タスク詳細1'
       fill_in 'task_dead_line', with: '002020-11-01'
-      # 「登録する」というvalue（表記文字）のあるボタンをクリックする
+      select '着手中', from: 'task[status]'
+      select '中', from: 'task_priority'
       click_on '登録する'
-      # clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
+      # save_and_open_page
       expect(page).to have_content 'タスク1'
     end
   end
@@ -97,15 +96,10 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '詳細表示機能' do
      context '任意のタスク詳細画面に遷移した場合' do
        it '該当タスクの内容が表示される' do
-         # タスク一覧ページに遷移
          visit tasks_path
-         # クリックしたい行を特定
          task = Task.find_by(name: 'デフォルト2')
-         # クリックしたいリンク（詳細）が含まれていることを確認
          expect(page).to have_link '詳細', href: task_path(task)
-         # 該当の詳細リンクをクリック
          click_link '詳細', href: task_path(task)
-         # タスク詳細ページの表示を確認する
          expect(page).to have_content 'デフォルト2'
        end
      end
