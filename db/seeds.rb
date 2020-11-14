@@ -18,3 +18,13 @@
                priority: priority
                )
 end
+１.times do |n|
+  name = hoge1
+  email = hoge1@hoge.jp
+  password = "password"
+  User.create!(name: name,
+               email: email,
+               password: hogehoge,
+               password_confirmation: hogehoge,
+               )
+end
