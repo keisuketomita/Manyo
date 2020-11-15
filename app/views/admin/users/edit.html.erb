@@ -1,0 +1,19 @@
+<%= form_with(model: @user, local: true, url: admin_user_path ) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @user.errors.count %>件のエラーがあります。</h2>
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="user_container">
+    <p>name : <%= f.text_field :name %></p>
+    <p>email : <%= f.text_field :email %></p>
+    <button type="submit" name="commit" data-disable-with="editting･･･"class="btn btn-outline-warning">
+      プロフィールを変更
+    </button>
+  </div>
+<% end %>

@@ -18,7 +18,11 @@
         </div>
         <ul class="nav navbar-nav navbar-right">
           <% if logged_in? %>
-          <%= link_to "マイページ", user_path(current_user.id) %>
+            <% if current_user.admin %>
+            <%= link_to "タスク管理", admin_tasks_path %>
+            <%= link_to "ユーザー管理", admin_users_path %>
+            <% end %>
+            <%= link_to "マイページ", user_path(current_user.id) %>
             <%= link_to "ログアウト", session_path(current_user.id), method: :delete %>
           <% else %>
             <%= link_to "サインアップ", new_user_path %>

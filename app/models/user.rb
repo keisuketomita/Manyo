@@ -5,5 +5,8 @@ class User < ApplicationRecord
   before_validation { email.downcase! }
   has_secure_password
   validates :password, presence:true, length: { minimum: 6 }, on: :create
-  has_many :tasks
+  has_many :tasks, dependent: :destroy
+  accepts_nested_attributes_for :tasks, allow_destroy: true
+
+  scope :created_at_desc, -> { order(created_at: :desc) }
 end
