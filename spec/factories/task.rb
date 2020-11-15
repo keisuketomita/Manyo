@@ -5,6 +5,7 @@ FactoryBot.define do
     dead_line { '002020-11-03' }
     status { '未着手' }
     priority { 0 }
+    association :user
   end
   factory :task_case2, class: Task do
     name { 'デフォルト2' }
@@ -12,6 +13,7 @@ FactoryBot.define do
     dead_line { '002020-11-02' }
     status { '着手中' }
     priority { 1 }
+    association :user
   end
   factory :task_case3, class: Task do
     name { 'デフォルトタスク3' }
@@ -19,5 +21,6 @@ FactoryBot.define do
     dead_line { '002020-11-01' }
     status { '完了' }
     priority { 2 }
+    association :user
   end
 end

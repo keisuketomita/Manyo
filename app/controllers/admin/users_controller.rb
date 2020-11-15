@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :admin_user
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :change_admin]
 
   def index
     @users = User.includes(:tasks).created_at_desc.page(params[:page])
@@ -31,8 +31,25 @@ class Admin::UsersController < ApplicationController
     end
   end
   def destroy
-    @user.destroy
-    redirect_to admin_users_path, notice: "ユーザーを削除しました"
+    if @user.destroy
+      redirect_to admin_users_path, notice: "ユーザーを削除しました"
+    else
+      redirect_to admin_users_path, notice: "管理者は2人以上必要です"
+    end
+  end
+  def change_admin
+    if @user.admin
+      @user.admin = "false"
+      if @user.update(user_params_admin)
+        redirect_to admin_users_path, notice: "管理者権限を削除しました"
+      else
+        redirect_to admin_users_path, notice: "管理者は2人以上必要です"
+      end
+    else
+      @user.admin = "true"
+      @user.update(user_params_admin)
+      redirect_to admin_users_path, notice: "管理者権限を付与しました"
+    end
   end
 
   private
@@ -42,8 +59,10 @@ class Admin::UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
+  def user_params_admin
+    params.permit(:admin)
+  end
   def set_user
     @user = User.find(params[:id])
   end
-
 end

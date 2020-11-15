@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   end
   resources :sessions, only: [:new, :create, :destroy]
   namespace :admin do
-    resources :users
+    resources :users do
+      member do
+        get :change_admin
+      end
+    end
     resources :tasks, only: [:index]
   end
 end

@@ -7,6 +7,7 @@
       <th>ユーザー名</th>
       <th>メールアドレス</th>
       <th>登録済みタスク数</th>
+      <th>管理者</th>
       <th></th>
       <th></th>
       <th></th>
@@ -19,10 +20,16 @@
         <td id="line-ad-name"><%= user.name %></td>
         <td id="line-ad-email"><%= user.email %></td>
         <td id="line-ad-tasks"><%= user.tasks.count %></td>
+        <td id="line-ad-admin">
+          <%= user.admin %>
+          <% if user != current_user %>
+            <%= link_to '切替', change_admin_admin_user_path(user.id), class: "btn-sm btn-outline-warning", id: "line-ad-link-admin" %>
+          <% end %>
+        </td>
         <td id="line-ad-link_detail"><%= link_to '詳細', admin_user_path(user.id), class: "btn btn-outline-primary"  %></td>
         <td id="line-ad-link_edit"><%= link_to '編集', edit_admin_user_path(user.id), class: "btn btn-outline-success"  %></td>
         <td id="line_ad-link-delete"><%= link_to '削除', admin_user_path(user.id), method: :delete,
-          data: { confirm: '本当に削除していいですか？' }, class: "btn btn-outline-danger" %></td>
+          data: { confirm: '本当に削除していいですか？' }, class: "btn btn-outline-danger", id: "confirm_delete" %></td>
       </tr>
     <% end %>
   </tbody>

@@ -9,4 +9,18 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :tasks, allow_destroy: true
 
   scope :created_at_desc, -> { order(created_at: :desc) }
+
+  before_update :admin_change_check
+  before_destroy :admin_change_check
+
+
+  def admin_change_check
+    target = User.find_by(id: self.id)
+    if User.where(admin: true).count <= 2
+      if target.admin
+        throw :abort
+      end
+    end
+  end
+
 end

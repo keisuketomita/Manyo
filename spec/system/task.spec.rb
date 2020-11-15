@@ -1,16 +1,21 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
   before do
-    FactoryBot.create(:task_case1)
-    FactoryBot.create(:task_case2)
-    FactoryBot.create(:task_case3)
+    user = FactoryBot.create(:user_case1)
+    FactoryBot.create(:task_case1, user: user)
+    FactoryBot.create(:task_case2, user: user)
+    FactoryBot.create(:task_case3, user: user)
+    visit root_path
+    fill_in 'eMail_session', with: 'user1@hoge.jp'
+    fill_in 'password_session', with: 'hogehoge'
+    click_button 'ログイン'
   end
   describe '一覧表示機能' do
     context '終了期限をクリックした場合' do
       it '終了期限の降順で表示される' do
         visit tasks_path
         within first('thead tr') do
-          click_link '終了期限'
+          click_link '終了期限▼'
         end
         task = all('tbody tr')
         expect(task[0]).to have_content 'デフォルトタスク1'
@@ -22,7 +27,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '優先順位の高い順で表示される' do
         visit tasks_path
         within first('thead tr') do
-          click_link '優先順位'
+          click_link '優先順位▼'
         end
         task = all('tbody tr')
         expect(task[0]).to have_content 'デフォルトタスク3'
