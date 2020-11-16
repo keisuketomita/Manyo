@@ -1,0 +1,31 @@
+<h1>タスク一覧（管理者用）</h1>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>タスク名</th>
+      <th>タスク詳細</th>
+      <th>終了期限</th>
+      <th>ステータス</th>
+      <th>優先順位</th>
+      <th>作成日時</th>
+      <th>更新日時</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr >
+        <th id="line-ad-count"><%= @row_count %></th>
+        <td id="line-ad-name"><%= task.name %></td>
+        <td id="line-ad-detail"><%= task.detail %></td>
+        <td id="line-ad-dead_line"><%= task.dead_line %></td>
+        <td id="line-ad-status"><%= task.status %></td>
+        <td id="line-ad-priority"><%= task.priority %></td>
+        <td id="line-ad-created_at"><%= task.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+        <td id="line-ad-updated_at"><%= task.updated_at.strftime("%Y-%m-%d %H:%M") %></td>
+      </tr>
+      <% @row_count += 1 %>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @tasks%>

@@ -12,6 +12,26 @@
 
   <body>
     <div class="container">
+      <nav class="navbar">
+        <div class="container_fluid">
+          <div class="nav navbar-nav navbar-left"">
+            <%= link_to "タスク一覧", tasks_path %>
+          </div>
+          <ul class="nav navbar-nav navbar-right">
+            <% if logged_in? %>
+            <% if current_user.admin %>
+            <%= link_to "全タスク閲覧", admin_tasks_path %>
+            <%= link_to "ユーザー管理", admin_users_path %>
+            <% end %>
+            <%= link_to "マイページ", user_path(current_user.id) %>
+            <%= link_to "ログアウト", session_path(current_user.id), method: :delete %>
+            <% else %>
+            <%= link_to "サインアップ", new_user_path %>
+            <%= link_to "ログイン", new_session_path %>
+            <% end %>
+          </ul>
+        </div>
+      </nav>
       <div class="notice">
         <% flash.each do |key, value| %>
           <p><%= content_tag(:div, value, class: "#{key}") %></p>
