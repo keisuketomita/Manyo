@@ -6,6 +6,9 @@ FactoryBot.define do
     status { '未着手' }
     priority { 0 }
     association :user
+    after(:create) do |task|
+      create(:labelling, task: task, label: create(:label_case1))
+    end
   end
   factory :task_case2, class: Task do
     name { 'デフォルト2' }
@@ -14,6 +17,9 @@ FactoryBot.define do
     status { '着手中' }
     priority { 1 }
     association :user
+    after(:create) do |task|
+      create(:labelling, task: task, label: create(:label_case2))
+    end
   end
   factory :task_case3, class: Task do
     name { 'デフォルトタスク3' }
@@ -22,5 +28,8 @@ FactoryBot.define do
     status { '完了' }
     priority { 2 }
     association :user
+    after(:create) do |task|
+      create(:labelling, task: task, label: create(:label_case3))
+    end
   end
 end
