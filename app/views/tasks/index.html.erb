@@ -5,6 +5,8 @@
     <%= f.text_field :name, placeholder: "検索..", id: "search_task_name",class: "search_colum" %>
     <p class="nobr ">ステータス</p>
     <%= select_tag :status, options_for_select([['未選択', ''],['未着手', '未着手'], ['着手中', '着手中'], ['完了', '完了']]) %>
+    <p class="nobr ">ラベル名</p>
+    <%= f.select :label_id, Label.pluck(:name, :id), { include_blank: "未選択" } %>
     <%= f.submit '検索', class: "btn btn-outline-primary" %>
     <%= link_to 'リセット', tasks_path, class: "btn btn-outline-secondary" %>
   </div>
@@ -21,6 +23,7 @@
       <th><%= link_to "優先順位▼", tasks_path(sort_expired_priority: "true") %></th>
       <th>作成日時</th>
       <th>更新日時</th>
+      <th>ラベル</th>
       <th></th>
       <th></th>
       <th></th>
@@ -37,6 +40,11 @@
         <td id="line-priority"><%= task.priority %></td>
         <td id="line-created_at"><%= task.created_at.strftime("%Y-%m-%d %H:%M") %></td>
         <td id="line-updated_at"><%= task.updated_at.strftime("%Y-%m-%d %H:%M") %></td>
+        <td id="line-labels">
+          <% task.labels.each do |label| %>
+            <%= label.name %>
+          <% end %>
+        </td>
         <td id="line-link_detail"><%= link_to '詳細', task_path(task.id), class: "btn btn-outline-primary"  %></td>
         <td id="line-link_edit"><%= link_to '編集', edit_task_path(task.id), class: "btn btn-outline-success"  %></td>
         <td id="line-linl_delete"><%= link_to '削除', task_path(task.id), method: :delete,
