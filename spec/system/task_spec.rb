@@ -10,13 +10,12 @@ RSpec.describe 'タスク管理機能', type: :system do
     fill_in 'password_session', with: 'hogehoge'
     click_button 'ログイン'
   end
+  # save_and_open_page
   describe '一覧表示機能' do
     context '終了期限をクリックした場合' do
       it '終了期限の降順で表示される' do
         visit tasks_path
-        within first('thead tr') do
-          click_link '終了期限▼'
-        end
+        first('thead tr').click_link '終了期限'
         task = all('tbody tr')
         expect(task[0]).to have_content 'デフォルトタスク1'
         expect(task[1]).to have_content 'デフォルト2'
@@ -26,9 +25,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     context '優先順位をクリックした場合' do
       it '優先順位の高い順で表示される' do
         visit tasks_path
-        within first('thead tr') do
-          click_link '優先順位▼'
-        end
+        first('thead tr').click_link '優先順位'
         task = all('tbody tr')
         expect(task[0]).to have_content 'デフォルトタスク3'
         expect(task[1]).to have_content 'デフォルト2'
@@ -54,32 +51,20 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context 'タスク名とステータスで検索した場合' do
       it '両方の検索結果が反映されたタスクが表示される' do
-        visit tasks_path
-        fill_in 'search_task_name', with: 'デフォルト'
-        find("#status").find("option[value='着手中']").select_option
-        click_on '検索'
-        task = all('tbody tr')
-        expect(task[0]).to have_content 'デフォルト2'
+        # label_spec.rb で検証しているため、削除
+        # it '検索条件(タスク名 & ステータス)'
       end
     end
     context 'タスク名のみで検索した場合' do
       it 'タスク名の検索結果が反映されたタスクが表示される' do
-        visit tasks_path
-        fill_in 'search_task_name', with: 'タスク'
-        find("#status").find("option[value='']").select_option
-        click_on '検索'
-        task = all('tbody tr')
-        expect(task[0]).to have_content 'デフォルトタスク1'
-        expect(task[1]).to have_content 'デフォルトタスク3'
+        # label_spec.rb で検証しているため、削除
+        # it '検索条件(タスク名)'
       end
     end
     context 'ステータスのみで検索した場合' do
       it 'ステータスの検索結果が反映されたタスクが表示される' do
-        visit tasks_path
-        find("#status").find("option[value='完了']").select_option
-        click_on '検索'
-        task = all('tbody tr')
-        expect(task[0]).to have_content 'デフォルトタスク3'
+        # label_spec.rb で検証しているため、削除
+        # it '検索条件(ステータス)'
       end
     end
   end
@@ -93,7 +78,6 @@ RSpec.describe 'タスク管理機能', type: :system do
       select '着手中', from: 'task[status]'
       select '中', from: 'task_priority'
       click_on '登録する'
-      # save_and_open_page
       expect(page).to have_content 'タスク1'
     end
   end
