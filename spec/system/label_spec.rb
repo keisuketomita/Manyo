@@ -2,9 +2,16 @@ require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
   before do
     user = FactoryBot.create(:user_case1)
-    FactoryBot.create(:task_case1, user: user)
-    FactoryBot.create(:task_case2, user: user)
-    FactoryBot.create(:task_case3, user: user)
+    @task1 = FactoryBot.create(:task_case1, user: user)
+    @task2 = FactoryBot.create(:task_case2, user: user)
+    @task3 = FactoryBot.create(:task_case3, user: user)
+    @label1 = FactoryBot.create(:label_case1)
+    @label2 = FactoryBot.create(:label_case2)
+    @label3 = FactoryBot.create(:label_case3)
+    FactoryBot.create(:labelling, task: @task1, label: @label1)
+    FactoryBot.create(:labelling, task: @task2, label: @label2)
+    FactoryBot.create(:labelling, task: @task3, label: @label3)
+
     visit root_path
     fill_in 'eMail_session', with: 'user1@hoge.jp'
     fill_in 'password_session', with: 'hogehoge'
