@@ -4,6 +4,7 @@ class Admin::UsersController < ApplicationController
 
   def index
     @users = User.includes(:tasks).created_at_desc.page(params[:page])
+    @row_count = 1
   end
 
   def new

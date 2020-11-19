@@ -25,6 +25,8 @@
     <%= f.select :priority, Task.priorities.keys,
                           { include_blank: false, selected: 0 },
                           { id: "task_priority" } %><br>
+    <%= f.label :labels, "ラベル" %><br>
+    <%= f.collection_check_boxes :label_ids, Label.all, :id, :name,{ id: "task_label" }  %><br>
   </div>
   <%= f.submit "登録する", name: "commit", data: {disable_with:"postting･･･"},
         class: "btn btn-outline-primary" %>

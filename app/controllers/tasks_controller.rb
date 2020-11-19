@@ -5,21 +5,18 @@ class TasksController < ApplicationController
   before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:name] && params[:status]
-      @tasks = current_user.tasks.name_like(params[:name]).status_is(params[:status]).page(params[:page])
-    elsif params[:name]
-      @tasks = current_user.tasks.name_like(params[:name]).page(params[:page])
-    elsif params[:status]
-      @tasks = current_user.tasks.status_is(params[:status]).page(params[:page])
+    @tasks = current_user.tasks
+    case
+    when params[:name].present?, params[:status].present?, params[:label_id].present? then
+      @tasks = @tasks.label_is(params[:label_id]).name_like(params[:name]).status_is(params[:status])
+    when params[:sort_expired_dead_line].present? then
+      @tasks = @tasks.dead_line_desc
+    when params[:sort_expired_priority].present? then
+      @tasks = @tasks.priority_desc
     else
-      if params[:sort_expired_dead_line]
-        @tasks = current_user.tasks.dead_line_desc.page(params[:page])
-      elsif params[:sort_expired_priority]
-        @tasks = current_user.tasks.priority_desc.page(params[:page])
-      else
-        @tasks = current_user.tasks.all.created_at_desc.page(params[:page])
-      end
+      @tasks = @tasks.created_at_desc
     end
+    @tasks = @tasks.page(params[:page])
     @row_count = 1
   end
 
@@ -58,7 +55,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:name, :detail, :dead_line, :status, :priority)
+    params.require(:task).permit(:name, :detail, :dead_line, :status, :priority, { label_ids: [] })
   end
   def set_task
      @task = Task.find(params[:id])

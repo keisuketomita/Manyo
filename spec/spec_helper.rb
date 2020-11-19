@@ -1,3 +1,4 @@
+require 'database_cleaner'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -13,5 +14,16 @@ RSpec.configure do |config|
   config.before(:each, type: :system) do
     driven_by(:selenium_chrome)
   end
-  
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
+
 end
