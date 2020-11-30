@@ -19,6 +19,7 @@
       <th>タスク名</th>
       <th>タスク詳細</th>
       <th><%= link_to "終了期限", tasks_path(sort_expired_dead_line: "true") %></th>
+      <th>期限超過</th>
       <th>ステータス</th>
       <th><%= link_to "優先順位", tasks_path(sort_expired_priority: "true") %></th>
       <th>作成日時</th>
@@ -36,6 +37,11 @@
         <td id="line-name"><%= task.name %></td>
         <td id="line-detail"><%= task.detail %></td>
         <td id="line-dead_line"><%= task.dead_line %></td>
+        <td id="line-over-dead_line">
+         <% if task.dead_line < Time.zone.today %>
+           <%= "超過" %>
+         <% end %>
+        </td>
         <td id="line-status"><%= task.status %></td>
         <td id="line-priority"><%= task.priority %></td>
         <td id="line-created_at"><%= task.created_at.strftime("%Y-%m-%d %H:%M") %></td>
