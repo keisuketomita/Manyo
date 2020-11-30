@@ -1,0 +1,18 @@
+<h1>ラベル編集</h1>
+<%= form_with(model: @label, local: true, url: label_path ) do |f| %>
+  <% if @label.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @label.errors.count %>件のエラーがあります。</h2>
+      <ul>
+      <% @label.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.label :name, "タスク名" %><br>
+  <%= f.text_field :name %><br>
+  <%= f.submit "更新", name: "commit", data: {disable_with:"editting･･･"},
+  class: "btn btn-outline-success" %>
+  <%= link_to '一覧', tasks_path, class: "btn btn-outline-secondary" %>
+<% end %>

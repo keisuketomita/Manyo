@@ -6,7 +6,8 @@
       <th>#</th>
       <th>ユーザー名</th>
       <th>メールアドレス</th>
-      <th>登録済みタスク数</th>
+      <th>登録タスク</th>
+      <th>登録ラベル</th>
       <th>管理者</th>
       <th></th>
       <th></th>
@@ -20,6 +21,7 @@
         <td id="line-ad-name"><%= user.name %></td>
         <td id="line-ad-email"><%= user.email %></td>
         <td id="line-ad-tasks"><%= user.tasks.count %></td>
+        <td id="line-ad-labels"><%= user.labels.count %></td>
         <td id="line-ad-admin">
           <%= user.admin %>
           <% if user != current_user %>

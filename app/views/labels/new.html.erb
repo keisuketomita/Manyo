@@ -1,0 +1,20 @@
+<h1>ラベル登録</h1>
+<%= form_with(model: @label, local: true) do |f| %>
+  <% if @label.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @label.errors.count %>件のエラーがあります。</h2>
+      <ul>
+        <% @label.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="label_wrapper">
+    <%= f.label :name, "ラベル名" %><br>
+    <%= f.text_field :name , id:"label_name" %><br>
+  </div>
+  <%= f.submit "登録する", name: "commit", data: {disable_with:"postting･･･"},
+        class: "btn btn-outline-primary" %>
+  <%= link_to '戻る', labels_path, class: "btn btn-outline-secondary" %>
+<% end %>

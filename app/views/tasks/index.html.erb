@@ -6,7 +6,7 @@
     <p class="nobr ">ステータス</p>
     <%= select_tag :status, options_for_select([['未選択', ''],['未着手', '未着手'], ['着手中', '着手中'], ['完了', '完了']]), id: "search_status" %>
     <p class="nobr ">ラベル名</p>
-    <%= f.select :label_id, Label.pluck(:name, :id), { include_blank: "未選択" }, id: "search_label" %>
+    <%= f.select :label_id, current_user.labels.pluck(:name, :id), { include_blank: "未選択" }, id: "search_label" %>
     <%= f.submit '検索', class: "btn btn-outline-primary" %>
     <%= link_to 'リセット', tasks_path, class: "btn btn-outline-secondary" %>
   </div>
