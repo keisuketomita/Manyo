@@ -12,8 +12,6 @@ class User < ApplicationRecord
 
   before_update :admin_change_check
   before_destroy :admin_change_check
-
-
   def admin_change_check
     target = User.find_by(id: self.id)
     if User.where(admin: true).count <= 2
@@ -22,5 +20,8 @@ class User < ApplicationRecord
       end
     end
   end
+
+  has_many :labels, dependent: :destroy
+
 
 end

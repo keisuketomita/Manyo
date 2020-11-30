@@ -52,57 +52,57 @@ end
 
 
 # *** ラベル作成
-@count = 1
-3.times do |n|
-  name = " ラベル#{@count} "
-  Label.create!(name: name)
-  @count += 1
-end
+# @count = 1
+# 3.times do |n|
+#   name = " ラベル#{@count} "
+#   Label.create!(name: name)
+#   @count += 1
+# end
 
 
-# *** 検索インデックス検証用
-name = "test"
-email = "test@hoge.jp"
-password = "hogehoge"
-@user = User.create!(
-  name: name,
-  email: email,
-  password: password,
-  password_confirmation: password
-)
-
-1000.times do |n|
-  10.times do |n|
-    name = Faker::Games::Pokemon.name
-    detail = Faker::Games::Pokemon.name
-    dead_line = "002020-11-30"
-    status = "未着手"
-    priority = 0
-    user_id = @user.id
-    Task.create!(
-      name: name,
-      detail: detail,
-      dead_line: dead_line,
-      status: status,
-      priority: priority,
-      user_id: user_id
-    )
-  end
-
-  10.times do |n|
-    name = Faker::Color.name
-    detail = Faker::Color.name
-    dead_line = "002020-12-30"
-    status = "着手中"
-    priority = 1
-    user_id = @user.id
-    Task.create!(
-      name: name,
-      detail: detail,
-      dead_line: dead_line,
-      status: status,
-      priority: priority,
-      user_id: user_id
-    )
-  end
-end
+# # *** 検索インデックス検証用
+# name = "test"
+# email = "test@hoge.jp"
+# password = "hogehoge"
+# @user = User.create!(
+#   name: name,
+#   email: email,
+#   password: password,
+#   password_confirmation: password
+# )
+#
+# 1000.times do |n|
+#   10.times do |n|
+#     name = Faker::Games::Pokemon.name
+#     detail = Faker::Games::Pokemon.name
+#     dead_line = "002020-11-30"
+#     status = "未着手"
+#     priority = 0
+#     user_id = @user.id
+#     Task.create!(
+#       name: name,
+#       detail: detail,
+#       dead_line: dead_line,
+#       status: status,
+#       priority: priority,
+#       user_id: user_id
+#     )
+#   end
+#
+#   10.times do |n|
+#     name = Faker::Color.name
+#     detail = Faker::Color.name
+#     dead_line = "002020-12-30"
+#     status = "着手中"
+#     priority = 1
+#     user_id = @user.id
+#     Task.create!(
+#       name: name,
+#       detail: detail,
+#       dead_line: dead_line,
+#       status: status,
+#       priority: priority,
+#       user_id: user_id
+#     )
+#   end
+# end
