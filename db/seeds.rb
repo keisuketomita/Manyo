@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # *** 一般ユーザー10人,タスク10件作成
-@count = 11
+@count = 2
 10.times do |n|
   name = "hoge#{@count}"
   email = "#{name}@hoge.jp"
@@ -53,7 +53,7 @@ User.create!(
 
 # *** ラベル作成
 @count = 1
-10.times do |n|
+3.times do |n|
   name = " ラベル#{@count} "
   Label.create!(name: name)
   @count += 1
