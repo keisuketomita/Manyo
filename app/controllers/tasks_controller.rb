@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:edit, :update, :destroy, :show]
   before_action :logged_in?, only: [:index, :new, :edit, :show]
   before_action :authenticate_user, only: [:index, :new, :edit, :show]
-  before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
   def index
     @tasks = current_user.tasks
@@ -51,6 +51,9 @@ class TasksController < ApplicationController
   end
 
   def show
+    if Read.create(task_id: @task.id, user_id: current_user.id)
+      @read = Read.update(read: true)
+    end
   end
 
   private
@@ -62,7 +65,7 @@ class TasksController < ApplicationController
   end
   def ensure_correct_user
     if @task.user_id != current_user.id
-      redirect_to tasks_path, notice: "他人のタスクを閲覧・編集することはできません"
+      redirect_to tasks_path, notice: "他人のタスクを閲覧・編集・削除することはできません"
     end
   end
 end

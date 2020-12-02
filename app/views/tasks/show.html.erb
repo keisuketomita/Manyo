@@ -9,5 +9,9 @@
     <%= label.name %>
   <% end %>
 </p>
+<p>ユーザー : <%= @task.user.name %></p>
+<% unless @task.user == current_user %>
+  <p>既未読 : <%= @read? '既読' : '未読'  %></p>
+<% end %>
 <%= link_to '編集', edit_task_path(@task.id), class: "btn btn-outline-success" %>
 <%= link_to '一覧', tasks_path, class: "btn btn-outline-secondary" %>

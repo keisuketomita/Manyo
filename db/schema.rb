@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_30_113658) do
+ActiveRecord::Schema.define(version: 2020_12_02_082544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,8 +25,8 @@ ActiveRecord::Schema.define(version: 2020_11_30_113658) do
   end
 
   create_table "labellings", force: :cascade do |t|
-    t.bigint "task_id"
-    t.bigint "label_id"
+    t.bigint "task_id", null: false
+    t.bigint "label_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["label_id"], name: "index_labellings_on_label_id"
@@ -39,6 +39,16 @@ ActiveRecord::Schema.define(version: 2020_11_30_113658) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.index ["user_id"], name: "index_labels_on_user_id"
+  end
+
+  create_table "reads", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "task_id", null: false
+    t.boolean "read"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_reads_on_task_id"
+    t.index ["user_id"], name: "index_reads_on_user_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -76,5 +86,7 @@ ActiveRecord::Schema.define(version: 2020_11_30_113658) do
   add_foreign_key "labellings", "labels"
   add_foreign_key "labellings", "tasks"
   add_foreign_key "labels", "users"
+  add_foreign_key "reads", "tasks"
+  add_foreign_key "reads", "users"
   add_foreign_key "tasks", "users"
 end
