@@ -26,6 +26,8 @@ class User < ApplicationRecord
   has_many :assigns, dependent: :destroy
   has_many :teams, through: :assigns, source: :team
 
+  has_many :reads, dependent: :destroy
+  has_many :read_tasks, through: :reads
 
 
 end
