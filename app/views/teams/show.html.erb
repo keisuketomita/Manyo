@@ -1,0 +1,70 @@
+<h1>チーム詳細</h1>
+<p>チーム名 : <%= @team.name %></p>
+<p>チームオーナー : <%=  %></p>
+<p>チームメンバー :
+  <% @team.users.each do |user| %>
+    <% if user.id == @team.owner_id %>
+      <%= "☆" %>
+    <% end %>
+    <%= " #{user.name} / " %>
+  <% end %>
+</p>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>タスク名</th>
+      <th>タスク詳細</th>
+      <th>終了期限</th>
+      <th>期限超過</th>
+      <th>ステータス</th>
+      <th>優先順位</th>
+      <th>作成日時</th>
+      <th>更新日時</th>
+      <th>ラベル</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |tasks| %>
+      <% tasks.each do |task| %>
+        <tr >
+          <th id="line-count"><%= @row_count %></th>
+          <td id="line-name"><%= task.name %></td>
+          <td id="line-detail"><%= task.detail %></td>
+          <td id="line-dead_line"><%= task.dead_line %></td>
+          <td id="line-over-dead_line">
+           <% if task.dead_line < Time.zone.today %>
+             <%= "超過" %>
+           <% end %>
+          </td>
+          <td id="line-status"><%= task.status %></td>
+          <td id="line-priority"><%= task.priority %></td>
+          <td id="line-created_at"><%= task.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+          <td id="line-updated_at"><%= task.updated_at.strftime("%Y-%m-%d %H:%M") %></td>
+          <td id="line-labels">
+            <% task.labels.each do |label| %>
+              <%= label.name %>
+            <% end %>
+          </td>
+          <% if task.user_id == current_user.id %>
+            <td id="line-link_detail">
+              <%= link_to '詳細', task_path(task.id), class: "btn btn-outline-primary"  %>
+            </td>
+            <td id="line-link_edit">
+              <%= link_to '編集', edit_task_path(task.id), class: "btn btn-outline-success"  %>
+            </td>
+            <td id="line-linl_delete">
+              <%= link_to '削除', task_path(task.id), method: :delete,
+              data: { confirm: '本当に削除していいですか？' }, class: "btn btn-outline-danger" %>
+            </td>
+          <% end %>
+        </tr>
+        <% @row_count += 1 %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to '一覧', teams_path, class: "btn btn-outline-secondary" %>

@@ -23,5 +23,9 @@ class User < ApplicationRecord
 
   has_many :labels, dependent: :destroy
 
+  has_many :assigns, dependent: :destroy
+  has_many :teams, through: :assigns, source: :team
+
+
 
 end

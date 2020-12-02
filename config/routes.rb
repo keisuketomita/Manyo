@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-  resources :labels
   root to: 'tasks#index'
+  resources :assigns, only: [:create, :destroy]
+  resources :teams
+  resources :labels
   resources :tasks
-  resources :users, only: [:new, :create, :show, :edit, :update] do
-  end
+  resources :users, only: [:new, :create, :show, :edit, :update]
   resources :sessions, only: [:new, :create, :destroy]
   namespace :admin do
     resources :users do

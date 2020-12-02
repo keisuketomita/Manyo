@@ -1,0 +1,37 @@
+<h1>チーム一覧</h1>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>チーム名</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @teams.each do |team| %>
+      <tr>
+        <th id="line-count"><%= @row_count %></th>
+        <td id="line-name"><%= team.name %></td>
+        <td id="line-link_show"><%= link_to '詳細', team_path(team.id), class: "btn btn-outline-primary"  %>
+        <% @assign = current_user.assigns.where(team_id: team.id) %>
+        <%if team.owner_id == current_user.id %>
+          </td>
+          <td id="line-link_edit"><%= link_to '編集', edit_team_path(team.id), class: "btn btn-outline-success"  %>
+          </td>
+          <td id="line-link_delete"><%= link_to '削除', team_path(team.id), method: :delete,
+            data: { confirm: '本当に削除していいですか？' }, class: "btn btn-outline-danger" %>
+          </td>
+        <% elsif @assign.present? %>
+          <td id="line-link_join"><%= link_to '離脱', assign_path(id: @assign.ids), method: :delete, class: "btn btn-warning" %>
+          </td>
+        <% else %>
+          <td id="line-link_join"><%= link_to '参加', assigns_path(team_id: team.id), method:
+            :post, class: "btn btn-outline-warning" %>
+          </td>
+        <% end %>
+      </tr>
+      <% @row_count += 1 %>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to '新規登録', new_team_path, class: "btn btn-primary post" %>
+<%= paginate @teams%>

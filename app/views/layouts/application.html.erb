@@ -23,8 +23,9 @@
                 <%= link_to "全タスク閲覧", admin_tasks_path %>
                 <%= link_to "ユーザー管理", admin_users_path %>
               <% end %>
+              <%= link_to "チーム一覧", teams_path %>
               <%= link_to "ラベル一覧", labels_path %>
-              <%= link_to "マイページ", user_path(current_user.id) %>
+              <%= link_to "#{current_user.name}のページ", user_path(current_user.id) %>
               <%= link_to "ログアウト", session_path(current_user.id), method: :delete %>
             <% else %>
               <%= link_to "サインアップ", new_user_path %>
