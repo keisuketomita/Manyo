@@ -33,7 +33,7 @@ class TeamsController < ApplicationController
   end
 
   def update
-    unless team_params[:user_ids].include?(@team.owner_id)
+    unless team_params[:user_ids].include?("#{@team.owner_id}")
       redirect_to teams_path, notice:"チームメンバーに作成者がいなくなるため、変更は破棄されました"
     else
       if @team.update(team_params)
