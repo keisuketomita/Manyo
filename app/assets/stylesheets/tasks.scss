@@ -77,12 +77,24 @@ table {
   border: solid 1px #FF9900;
   background-color: #fff;
 }
+.btn-warning {
+  color: #fff;
+  border: solid 1px #FF9900;
+  background-color: #FF9900;
+}
 .btn-outline-warning:hover {
   color: #fff;
   background-color: #FF9900;
   border-color: #FF9900;
+}
 
-}.btn-outline-primary {
+.btn-warning:hover {
+  color: #FF9900;
+  background-color: #fff;
+  border-color: #FF9900;
+}
+
+.btn-outline-primary {
   color: #007bff;
   border: solid 1px #007bff;
   background-color: #fff;

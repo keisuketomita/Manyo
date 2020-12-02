@@ -1,0 +1,22 @@
+<h1>チーム編集</h1>
+<%= form_with(model: @team, local: true) do |f| %>
+  <% if @team.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @team.errors.count %>件のエラーがあります。</h2>
+      <ul>
+        <% @team.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="team_wrapper">
+    <%= f.label :name, "チーム名" %><br>
+    <%= f.text_field :name , id:"team_name" %><br>
+    <%= f.label :users, "チームメンバー" %><br>
+    <%= f.collection_check_boxes :user_ids, User.all, :id, :name,{ id: "team_user" }  %><br>
+  </div>
+  <%= f.submit "更新", name: "commit", data: {disable_with:"editting･･･"},
+        class: "btn btn-outline-success" %>
+  <%= link_to '一覧', teams_path, class: "btn btn-outline-secondary" %>
+<% end %>
