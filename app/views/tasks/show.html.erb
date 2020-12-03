@@ -13,5 +13,16 @@
 <% unless @task.user == current_user %>
   <p>既未読 : <%= @read? '既読' : '未読'  %></p>
 <% end %>
+<p>添付ファイル:
+  <% if @task.images.attached? %>
+    <% @task.images.each do |image| %>
+      <% url = rails_blob_path(image) %>
+      <br>
+      <%= link_to URI.unescape(File.basename(url)), url, target: :_blank %>
+      <%= link_to 'ダウンロード', download_task_path(params[:id], image_id: image) %>
+    <% end %>
+  <% end %>
+</p>
+
 <%= link_to '編集', edit_task_path(@task.id), class: "btn btn-outline-success" %>
 <%= link_to '一覧', tasks_path, class: "btn btn-outline-secondary" %>

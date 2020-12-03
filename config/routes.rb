@@ -3,9 +3,13 @@ Rails.application.routes.draw do
   resources :assigns, only: [:create, :destroy]
   resources :teams
   resources :labels
-  resources :tasks
   resources :users, only: [:new, :create, :show, :edit, :update]
   resources :sessions, only: [:new, :create, :destroy]
+  resources :tasks do
+    member do
+      get :download
+    end
+  end
   namespace :admin do
     resources :users do
       member do
