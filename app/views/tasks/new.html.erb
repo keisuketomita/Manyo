@@ -27,6 +27,8 @@
                           { id: "task_priority" } %><br>
     <%= f.label :labels, "ラベル" %><br>
     <%= f.collection_check_boxes :label_ids, current_user.labels, :id, :name,{ id: "task_label" }  %><br>
+    <%= f.label "添付ファイル(複数ファイル可)" %><br>
+    <%= f.file_field :images, multiple: true %><br>
   </div>
   <%= f.submit "登録する", name: "commit", data: {disable_with:"postting･･･"},
         class: "btn btn-outline-primary" %>

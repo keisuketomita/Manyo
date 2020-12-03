@@ -22,4 +22,6 @@ class Task < ApplicationRecord
   has_many :reads, dependent: :destroy
   has_many :read_users, through: :reads
 
+  has_many_attached :images
+
 end

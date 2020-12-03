@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:edit, :update, :destroy, :show]
+  before_action :set_task, only: [:edit, :update, :destroy, :show, :download]
   before_action :logged_in?, only: [:index, :new, :edit, :show]
   before_action :authenticate_user, only: [:index, :new, :edit, :show]
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
@@ -38,6 +38,12 @@ class TasksController < ApplicationController
   end
 
   def update
+    if params[:task][:image_ids]
+      params[:task][:image_ids].each do |image_id|
+        image = @task.images.find(image_id)
+        image.purge
+      end
+    end
     if @task.update(task_params)
       redirect_to tasks_path, notice: "タスクを編集しました"
     else
@@ -55,10 +61,14 @@ class TasksController < ApplicationController
       @read = Read.update(read: true)
     end
   end
+  def download
+    data = @task.images.find(params[:image_id]).download
+    send_data(data, type: 'image/png', filename: 'download.jpg')
+  end
 
   private
   def task_params
-    params.require(:task).permit(:name, :detail, :dead_line, :status, :priority, { label_ids: [] })
+    params.require(:task).permit(:name, :detail, :dead_line, :status, :priority, { label_ids: [] }, images: [])
   end
   def set_task
      @task = Task.find(params[:id])
