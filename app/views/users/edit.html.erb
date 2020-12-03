@@ -9,11 +9,21 @@
       </ul>
     </div>
   <% end %>
-  <div class="user_container">
-    <p>name : <%= f.text_field :name %></p>
-    <p>email : <%= f.text_field :email %></p>
-    <button type="submit" name="commit" data-disable-with="editting･･･"class="btn btn-outline-warning">
-      プロフィールを変更
-    </button>
+  <div class="user_container clearfix">
+    <div class="image_container">
+      <label class="file_mask">
+        <%= image_tag @user.image.url, class: "user_image img-thumbnail img-circle" %>
+        <div id="mask_file_01"">
+          <%= f.file_field :image %>
+        </div>
+      </label>
+    </div>
+    <div class="info_container">
+      <p>name : <%= f.text_field :name %></p>
+      <p>email : <%= f.text_field :email %></p>
+      <button type="submit" name="commit" data-disable-with="editting･･･"class="btn btn-outline-warning">
+        プロフィールを変更
+      </button>
+    </div>
   </div>
 <% end %>

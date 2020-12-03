@@ -29,5 +29,7 @@ class User < ApplicationRecord
   has_many :reads, dependent: :destroy
   has_many :read_tasks, through: :reads
 
+  mount_uploader :image, ImageUploader
+
 
 end
