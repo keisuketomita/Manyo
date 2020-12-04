@@ -1,0 +1,9 @@
+<h1>My Calender</h1>
+<%= month_calendar(events: @tasks, attribute: :dead_line) do |date, tasks| %>
+  <%= date.day %>
+  <% tasks.each do |task| %>
+    <div>
+      <%= link_to "締切：#{task.name}", task %>
+    </div>
+  <% end %>
+<% end %>

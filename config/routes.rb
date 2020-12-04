@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     member do
       get :download
     end
+    collection do
+      get :calender
+    end
   end
   namespace :admin do
     resources :users do
