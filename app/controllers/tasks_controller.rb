@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:edit, :update, :destroy, :show, :download]
-  before_action :logged_in?, only: [:index, :new, :edit, :show]
-  before_action :authenticate_user, only: [:index, :new, :edit, :show]
+  before_action :logged_in?, only: [:index, :new, :edit, :show, :calender]
+  before_action :authenticate_user, only: [:index, :new, :edit, :show, :calender]
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
   def index
@@ -65,6 +65,10 @@ class TasksController < ApplicationController
     data = @task.images.find(params[:image_id]).download
     send_data(data, type: 'image/png', filename: 'download.jpg')
   end
+  def calender
+    @tasks = current_user.tasks
+  end
+
 
   private
   def task_params
